@@ -117,6 +117,7 @@ function productCard(p) {
       </div>
       <div class="sizes" role="radiogroup" aria-label="Talla de ${p.name}">
         <span class="sizes-label">Talla</span>${sizeButtons(p.id, p.sizes)}
+        <a class="size-guide" href="#tallas">Guía de tallas</a>
       </div>
       <p class="hint" id="hint-${p.id}" aria-live="polite"></p>
       <button type="button" class="btn btn-ink btn-block" data-add="${p.id}">Agregar al carrito</button>
@@ -239,6 +240,11 @@ function renderCart(bump) {
   badge.classList.toggle("has", count > 0);
   if (bump) { badge.classList.remove("bump"); void badge.offsetWidth; badge.classList.add("bump"); }
   $("#cartTotal").textContent = CLP(total);
+  const bar = $("#cartBar");
+  bar.hidden = count === 0;
+  document.body.classList.toggle("has-cart", count > 0);
+  $("#cbCount").textContent = count === 1 ? "1 pieza" : `${count} piezas`;
+  $("#cbTotal").textContent = CLP(total);
 
   const body = $("#cartBody");
   if (!cart.length) {
@@ -341,6 +347,7 @@ function closeCart() {
   if (lastFocus) lastFocus.focus();
 }
 $("#cartOpen").addEventListener("click", openCart);
+$("#cartBar").addEventListener("click", openCart);
 $("#cartClose").addEventListener("click", closeCart);
 $("#overlay").addEventListener("click", closeCart);
 document.addEventListener("keydown", (e) => {

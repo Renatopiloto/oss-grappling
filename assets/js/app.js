@@ -18,7 +18,8 @@ const PRODUCTS = [
     badge: "Nuevo",
     front: "polera-negra-frente",
     back: "polera-negra-espalda",
-    photos: ["lookbook-solo", "lookbook-newdrop"],
+    photos: ["lookbook-solo", "lookbook-newdrop", "feature-silicona"],
+    features: ["Silicona antideslizante", "15% spandex"],
     desc: "Rashguard negra con el logo OSS al pecho y las rosas en tono sobre tono. Ajustada al cuerpo, con logo en la manga y en la nuca.",
   },
   {
@@ -31,6 +32,7 @@ const PRODUCTS = [
     front: "polera-blanca-frente",
     back: "polera-blanca-espalda",
     photos: ["lookbook-protagonista", "lookbook-drop1"],
+    features: ["Silicona antideslizante", "15% spandex"],
     desc: "Rashguard blanca con rosas en línea negra que suben por el costado y el logo OSS al pecho. En la espalda, un ramo de rosas a la altura de la cadera.",
   },
   {
@@ -42,7 +44,8 @@ const PRODUCTS = [
     badge: "Nuevo",
     front: "short-frente",
     back: "short-espalda",
-    photos: ["lookbook-equipo-2", "lookbook-takedown"],
+    photos: ["feature-bolsillo", "feature-cordones", "lookbook-equipo-2"],
+    features: ["Bolsillo para bucal", "Cordones interiores"],
     desc: "Fight short blanco con rosas en una pierna y OSS GRAPPLING 押忍グラップリング en la otra. Pretina negra con logo y borde curvo con ribete negro.",
   },
 ];
@@ -61,6 +64,7 @@ const PACK = {
   front: "conjunto",
   back: "lookbook-equipo",
   photos: ["polera-negra-frente", "short-frente", "lookbook-sakura"],
+  features: ["Silicona antideslizante", "15% spandex", "Bolsillo para bucal", "Cordones interiores"],
   desc: "Polera negra + short blanco. El combo completo para entrar al tatami, a menor precio que por separado.",
 };
 /* ========================================================================== */
@@ -69,7 +73,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const CLP = (n) => "$" + n.toLocaleString("es-CL");
 const src = (name, small) => {
-  if (!small) return IMG + name + ".webp";
+  if (!small || name.startsWith("feature")) return IMG + name + ".webp";
   // Las fotos de producto tienen versión -600, las de lookbook versión -800
   return IMG + name + (name.startsWith("lookbook") || name.startsWith("hero") ? "-800" : "-600") + ".webp";
 };
@@ -89,6 +93,11 @@ function sizeButtons(scope, sizes, part) {
   return sizes.map((s) =>
     `<button type="button" class="size" role="radio" aria-checked="false" data-scope="${scope}" ${part ? `data-part="${part}"` : ""} data-size="${s}">${s}</button>`
   ).join("");
+}
+
+function featureList(p) {
+  if (!p.features) return "";
+  return `<ul class="feat-chips">${p.features.map((f) => `<li>${f}</li>`).join("")}</ul>`;
 }
 
 function productCard(p) {
@@ -115,6 +124,7 @@ function productCard(p) {
         </div>
         <p class="price">${CLP(p.price)}</p>
       </div>
+      ${featureList(p)}
       <div class="sizes" role="radiogroup" aria-label="Talla de ${p.name}">
         <span class="sizes-label">Talla</span>${sizeButtons(p.id, p.sizes)}
         <a class="size-guide" href="#tallas">Guía de tallas</a>
@@ -140,6 +150,7 @@ function packCard(p) {
         <h3 class="display pack-title"><button type="button" class="plain" data-open="${p.id}">${p.name}</button></h3>
       </div>
       <p class="pack-desc">${p.desc}</p>
+      ${featureList(p)}
       <p class="price">${CLP(p.price)}<span class="price-old">${CLP(p.oldPrice)}</span></p>
       <div class="pack-sizes">
         ${p.parts.map((part) => `
@@ -390,10 +401,12 @@ function openQuickView(id) {
       </div>
       <p class="price">${CLP(p.price)}${p.oldPrice ? `<span class="price-old">${CLP(p.oldPrice)}</span><span class="save">Ahorra ${CLP(p.oldPrice - p.price)}</span>` : ""}</p>
       <p class="qv-desc">${p.desc}</p>
+      ${p.features ? `<ul class="qv-feats">${p.features.map((f) => `<li>${f}</li>`).join("")}</ul>` : ""}
       <ul class="qv-specs">
         <li><strong>Tela:</strong> 85% poliéster · 15% spandex</li>
         <li><strong>Tallas:</strong> S, M y L · <a href="#tallas" data-qv-close>ver medidas</a></li>
         <li><strong>Envío:</strong> a todo Chile o retiro en persona</li>
+        <li><a href="#detalles" data-qv-close>Ver el video de detalles</a></li>
       </ul>
       ${sizesHtml}
       <p class="hint" id="qvhint-${p.id}" aria-live="polite"></p>
@@ -457,6 +470,54 @@ $("#lightbox").addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") showShot(lbIndex - 1);
   if (e.key === "ArrowRight") showShot(lbIndex + 1);
 });
+
+/* ---------- Video "Hecho para rodar" ---------------------------------- */
+const vid = $("#rodarVideo");
+const vToggle = $("#videoToggle");
+const feats = $$("#features .feature");
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+  (navigator.connection && navigator.connection.saveData);
+let userPaused = false;
+
+function setPlaying(on) { vToggle.classList.toggle("is-playing", on); vToggle.setAttribute("aria-label", on ? "Pausar video" : "Reproducir video"); }
+vid.addEventListener("play", () => setPlaying(true));
+vid.addEventListener("pause", () => setPlaying(false));
+vToggle.addEventListener("click", () => {
+  if (vid.paused) { userPaused = false; vid.play().catch(() => {}); }
+  else { userPaused = true; vid.pause(); }
+});
+vid.addEventListener("timeupdate", () => {
+  const t = vid.currentTime;
+  if (vid.duration) $("#videoBar").style.transform = `scaleX(${t / vid.duration})`;
+  feats.forEach((f) => f.classList.toggle("active", t >= Number(f.dataset.t) && t < Number(f.dataset.end)));
+});
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && !calm && !userPaused) vid.play().catch(() => {});
+      else if (!en.isIntersecting && !vid.paused) vid.pause();
+    });
+  }, { threshold: 0.45 }).observe(vid);
+}
+feats.forEach((f) => f.addEventListener("click", () => {
+  userPaused = false;
+  const go = () => { vid.currentTime = Number(f.dataset.t); vid.play().catch(() => {}); };
+  if (vid.readyState >= 1) go(); else { vid.addEventListener("loadedmetadata", go, { once: true }); vid.load(); }
+  if (window.matchMedia("(max-width: 860px)").matches) vid.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
+}));
+
+const vModal = $("#videoModal"), vBig = $("#videoBig");
+$("#videoFull").addEventListener("click", () => {
+  vid.pause();
+  const start = vid.currentTime || 0;
+  if (typeof vModal.showModal === "function") vModal.showModal(); else vModal.setAttribute("open", "");
+  const go = () => { try { vBig.currentTime = start; } catch (e) {} vBig.play().catch(() => {}); };
+  if (vBig.readyState >= 1) go(); else { vBig.addEventListener("loadedmetadata", go, { once: true }); vBig.load(); }
+});
+function closeVideo() { vBig.pause(); vModal.close(); }
+$("#videoClose").addEventListener("click", closeVideo);
+vModal.addEventListener("click", (e) => { if (e.target === vModal) closeVideo(); });
+vModal.addEventListener("close", () => vBig.pause());
 
 /* ---------- Menú móvil --------------------------------------------------- */
 const nav = $("#nav"), menuBtn = $("#menuBtn");

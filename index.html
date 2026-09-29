@@ -23,7 +23,7 @@
 <link rel="preload" href="assets/fonts/saira-italic-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/montserrat-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-tres-1200.webp" imagesrcset="assets/img/hero-tres-800.webp 600w, assets/img/hero-tres-1200.webp 900w, assets/img/hero-tres.webp 1200w" imagesizes="(max-width: 860px) 92vw, 44vw">
-<link rel="stylesheet" href="assets/css/styles.css?v=202609290240">
+<link rel="stylesheet" href="assets/css/styles.css?v=202609290303">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,9 +53,9 @@
     </a>
     <nav class="nav" id="nav" aria-label="Principal">
       <a href="#coleccion">Colección</a>
-      <a href="#lookbook">Lookbook</a>
+      <a href="#detalles">Detalles</a>
       <a href="#tallas">Tallas</a>
-      <a href="#oss">Qué es OSS</a>
+      <a href="#lookbook">Lookbook</a>
       <a href="#preguntas">Preguntas</a>
     </nav>
     <div class="header-actions">
@@ -81,7 +81,7 @@
         <h1 class="display hero-title"><span class="l">Drop 01</span> <span class="l hl">Sakura</span></h1>
         <p class="lede">Rashguards y shorts de grappling con diseño floral.</p>
         <div class="hero-ctas">
-          <a class="btn btn-sakura" href="#coleccion">Ver la colección</a>
+          <a class="btn btn-sakura" href="#coleccion">Comprar ahora</a>
           <a class="btn btn-ghost" href="#tallas">Guía de tallas</a>
         </div>
         <dl class="facts">
@@ -120,10 +120,78 @@
       <div class="grid-products" id="grid"></div>
       <div id="packSlot"></div>
 
-      <div class="details" aria-labelledby="detalles-title">
-        <div class="details-head">
-          <p class="kicker">De cerca</p>
-          <h3 class="display details-title" id="detalles-title">En detalle</h3>
+      <noscript><p class="noscript">Para armar tu pedido activa JavaScript o escríbenos directo por WhatsApp al +56 9 4044 5826.</p></noscript>
+    </div>
+  </section>
+
+  <!-- HECHO PARA RODAR -->
+  <section class="ink section rodar" id="detalles" aria-labelledby="rodar-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Detalles técnicos</p>
+          <h2 class="display h2" id="rodar-title">Hecho para rodar</h2>
+        </div>
+        <p class="section-note">Lo que no se ve en una foto. Cada prenda está pensada para aguantar el sparring sin que tengas que acomodarla.</p>
+      </div>
+
+      <div class="rodar-grid">
+        <div class="rodar-video">
+          <div class="video-frame">
+            <video id="rodarVideo" muted loop playsinline preload="none" poster="assets/img/video-poster.webp" width="720" height="1280" aria-label="Video de los detalles técnicos de la polera y el short OSS">
+              <source src="assets/video/hecho-para-rodar-720.mp4" type="video/mp4">
+            </video>
+            <button class="video-play" id="videoToggle" type="button" aria-label="Reproducir video">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="ic-play" d="M8 5.5v13l11-6.5z" fill="currentColor"/><path class="ic-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+            </button>
+            <div class="video-progress" aria-hidden="true"><span id="videoBar"></span></div>
+          </div>
+          <button class="btn btn-ghost btn-block video-full" id="videoFull" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Ver en grande con sonido
+          </button>
+        </div>
+
+        <ol class="features" id="features">
+          <li>
+            <button type="button" class="feature" data-t="5.9" data-end="9">
+              <img src="assets/img/feature-silicona.webp" width="720" height="720" alt="Banda de silicona en la base de la polera" loading="lazy">
+              <span class="f-meta"><span class="f-n">01</span><span class="f-tag">Polera</span></span>
+              <strong>Silicona antideslizante</strong>
+              <span class="f-text">Banda en la base que no deja que la polera se suba durante el sparring.</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="feature" data-t="9.1" data-end="13.7">
+              <img src="assets/img/feature-spandex.webp" width="720" height="720" alt="Costado de la polera con tela elástica" loading="lazy">
+              <span class="f-meta"><span class="f-n">02</span><span class="f-tag">Polera</span></span>
+              <strong>15% spandex</strong>
+              <span class="f-text">Ajuste anatómico que se mueve contigo y absorbe el sudor.</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="feature" data-t="13.8" data-end="18.7">
+              <img src="assets/img/feature-bolsillo.webp" width="720" height="720" alt="Bolsillo interno en la pretina del short" loading="lazy">
+              <span class="f-meta"><span class="f-n">03</span><span class="f-tag">Short</span></span>
+              <strong>Bolsillo para bucal</strong>
+              <span class="f-text">Bolsillo interno en la pretina para tener el bucal siempre a mano.</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="feature" data-t="18.8" data-end="22.4">
+              <img src="assets/img/feature-cordones.webp" width="720" height="720" alt="Cordones interiores del short" loading="lazy">
+              <span class="f-meta"><span class="f-n">04</span><span class="f-tag">Short</span></span>
+              <strong>Cordones interiores</strong>
+              <span class="f-text">Sujeción firme por dentro, sin cordones sueltos que el rival pueda agarrar.</span>
+            </button>
+          </li>
+        </ol>
+      </div>
+
+      <div class="design-row" aria-labelledby="diseno-title">
+        <div class="design-head">
+          <p class="kicker">Diseño</p>
+          <h3 class="display details-title" id="diseno-title">El diseño, de cerca</h3>
         </div>
         <ul class="detail-grid">
           <li>
@@ -153,61 +221,6 @@
         </ul>
       </div>
 
-      <noscript><p class="noscript">Para armar tu pedido activa JavaScript o escríbenos directo por WhatsApp al +56 9 4044 5826.</p></noscript>
-    </div>
-  </section>
-
-  <!-- CÓMO COMPRAR -->
-  <section class="ink section steps" aria-labelledby="pasos-title">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <p class="kicker">Sin vueltas</p>
-          <h2 class="display h2" id="pasos-title">Cómo comprar</h2>
-        </div>
-        <p class="section-note">No necesitas cuenta ni tarjeta en la página. Todo se confirma con una persona del equipo.</p>
-      </div>
-      <ol class="step-list">
-        <li>
-          <span class="step-n">1</span>
-          <h3>Elige pieza y talla</h3>
-          <p>Toca S, M o L en cada prenda. Si dudas, revisa la <a href="#tallas">guía de tallas</a>.</p>
-        </li>
-        <li>
-          <span class="step-n">2</span>
-          <h3>Revisa tu carrito</h3>
-          <p>Suma o quita unidades y déjanos tu nombre y comuna para agilizar el despacho.</p>
-        </li>
-        <li>
-          <span class="step-n">3</span>
-          <h3>Envía el pedido por WhatsApp</h3>
-          <p>Llega con el detalle listo. Te respondemos para coordinar pago y despacho, o retiro en persona.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- LOOKBOOK -->
-  <section class="ink section lookbook" id="lookbook" aria-labelledby="lookbook-title">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <p class="kicker">En el tatami</p>
-          <h2 class="display h2" id="lookbook-title">Lookbook</h2>
-        </div>
-        <p class="section-note">Así se ve el Drop 01 puesto: entrenando, rodando y con el equipo. Toca una foto para verla en grande.</p>
-      </div>
-      <div class="masonry" id="lookbookGrid">
-        <button class="shot" type="button" data-full="assets/img/lookbook-sakura.webp"><img src="assets/img/lookbook-sakura-800.webp" width="800" height="1067" alt="Pasaje de guardia con polera y short blancos" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-newdrop.webp"><img src="assets/img/lookbook-newdrop-800.webp" width="600" height="800" alt="Dos grapplers con la polera negra, de frente y de espalda" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-equipo.webp"><img src="assets/img/lookbook-equipo-800.webp" width="450" height="800" alt="Equipo de brazos cruzados con la colección completa" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-grip.webp"><img src="assets/img/lookbook-grip-800.webp" width="600" height="800" alt="Agarre de pie entre polera blanca y polera negra" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-drop1.webp"><img src="assets/img/lookbook-drop1-800.webp" width="600" height="800" alt="Espalda de la polera blanca con el logo OSS" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-solo.webp"><img src="assets/img/lookbook-solo-800.webp" width="600" height="800" alt="Grappler con polera negra y short blanco junto a la piscina" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-takedown.webp"><img src="assets/img/lookbook-takedown-800.webp" width="450" height="800" alt="Intento de derribo con el short blanco" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-equipo-3.webp"><img src="assets/img/lookbook-equipo-3-800.webp" width="450" height="800" alt="Tres grapplers de noche con la colección Sakura" loading="lazy"></button>
-        <button class="shot" type="button" data-full="assets/img/lookbook-equipo-4.webp"><img src="assets/img/lookbook-equipo-4-800.webp" width="450" height="800" alt="Equipo OSS con poleras blancas y negra" loading="lazy"></button>
-      </div>
     </div>
   </section>
 
@@ -271,6 +284,60 @@
     </div>
   </section>
 
+  <!-- LOOKBOOK -->
+  <section class="ink section lookbook" id="lookbook" aria-labelledby="lookbook-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">En el tatami</p>
+          <h2 class="display h2" id="lookbook-title">Lookbook</h2>
+        </div>
+        <p class="section-note">Así se ve el Drop 01 puesto: entrenando, rodando y con el equipo. Toca una foto para verla en grande.</p>
+      </div>
+      <div class="masonry" id="lookbookGrid">
+        <button class="shot" type="button" data-full="assets/img/lookbook-sakura.webp"><img src="assets/img/lookbook-sakura-800.webp" width="800" height="1067" alt="Pasaje de guardia con polera y short blancos" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-newdrop.webp"><img src="assets/img/lookbook-newdrop-800.webp" width="600" height="800" alt="Dos grapplers con la polera negra, de frente y de espalda" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-equipo.webp"><img src="assets/img/lookbook-equipo-800.webp" width="450" height="800" alt="Equipo de brazos cruzados con la colección completa" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-grip.webp"><img src="assets/img/lookbook-grip-800.webp" width="600" height="800" alt="Agarre de pie entre polera blanca y polera negra" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-drop1.webp"><img src="assets/img/lookbook-drop1-800.webp" width="600" height="800" alt="Espalda de la polera blanca con el logo OSS" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-solo.webp"><img src="assets/img/lookbook-solo-800.webp" width="600" height="800" alt="Grappler con polera negra y short blanco junto a la piscina" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-takedown.webp"><img src="assets/img/lookbook-takedown-800.webp" width="450" height="800" alt="Intento de derribo con el short blanco" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-equipo-3.webp"><img src="assets/img/lookbook-equipo-3-800.webp" width="450" height="800" alt="Tres grapplers de noche con la colección Sakura" loading="lazy"></button>
+        <button class="shot" type="button" data-full="assets/img/lookbook-equipo-4.webp"><img src="assets/img/lookbook-equipo-4-800.webp" width="450" height="800" alt="Equipo OSS con poleras blancas y negra" loading="lazy"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO COMPRAR -->
+  <section class="paper section steps" aria-labelledby="pasos-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Sin vueltas</p>
+          <h2 class="display h2" id="pasos-title">Cómo comprar</h2>
+        </div>
+        <p class="section-note">No necesitas cuenta ni tarjeta en la página. Todo se confirma con una persona del equipo.</p>
+      </div>
+      <ol class="step-list">
+        <li>
+          <span class="step-n">1</span>
+          <h3>Elige pieza y talla</h3>
+          <p>Toca S, M o L en cada prenda. Si dudas, revisa la <a href="#tallas">guía de tallas</a>.</p>
+        </li>
+        <li>
+          <span class="step-n">2</span>
+          <h3>Revisa tu carrito</h3>
+          <p>Suma o quita unidades y déjanos tu nombre y comuna para agilizar el despacho.</p>
+        </li>
+        <li>
+          <span class="step-n">3</span>
+          <h3>Envía el pedido por WhatsApp</h3>
+          <p>Llega con el detalle listo. Te respondemos para coordinar pago y despacho, o retiro en persona.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- FILOSOFÍA -->
   <section class="ink section oss" id="oss" aria-labelledby="oss-title">
     <div class="wrap oss-grid">
@@ -298,6 +365,14 @@
         <details>
           <summary>¿Cómo hago mi pedido?</summary>
           <p>Elige tus piezas y tallas, ábrelas en el carrito y toca «Enviar pedido por WhatsApp». Se abre un mensaje con todo el detalle; solo tienes que enviarlo.</p>
+        </details>
+        <details>
+          <summary>¿La polera se sube al rodar?</summary>
+          <p>No. Tiene una banda de silicona antideslizante en la base que la mantiene en su lugar durante el sparring. Puedes verlo en el <a href="#detalles">video de detalles</a>.</p>
+        </details>
+        <details>
+          <summary>¿El short tiene bolsillo?</summary>
+          <p>Sí. Tiene un bolsillo interno en la pretina pensado para el bucal, y cordones interiores para ajustarlo firme sin que queden sueltos por fuera.</p>
         </details>
         <details>
           <summary>¿Dónde están?</summary>
@@ -356,7 +431,9 @@
       <h2 class="foot-h">Tienda</h2>
       <ul class="foot-list">
         <li><a href="#coleccion">Colección</a></li>
+        <li><a href="#detalles">Detalles técnicos</a></li>
         <li><a href="#lookbook">Lookbook</a></li>
+        <li><a href="#oss">Qué es OSS</a></li>
         <li><a href="#tallas">Guía de tallas</a></li>
         <li><a href="#preguntas">Preguntas</a></li>
       </ul>
@@ -427,6 +504,17 @@
   <div class="qv-inner" id="qvInner"></div>
 </dialog>
 
+<!-- Video en grande -->
+<dialog class="lightbox video-modal" id="videoModal" aria-label="Video de detalles">
+  <button class="icon-btn lb-close" id="videoClose" type="button" aria-label="Cerrar video">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <video id="videoBig" controls playsinline preload="none" poster="assets/img/video-poster.webp">
+    <source src="assets/video/hecho-para-rodar-1080-vp9.mp4" type='video/mp4; codecs="vp09.00.40.08"'>
+    <source src="assets/video/hecho-para-rodar-720.mp4" type="video/mp4">
+  </video>
+</dialog>
+
 <!-- Lightbox -->
 <dialog class="lightbox" id="lightbox" aria-label="Foto ampliada">
   <button class="icon-btn lb-close" id="lbClose" type="button" aria-label="Cerrar foto">
@@ -446,6 +534,6 @@
   <button type="button" id="toastCart">Ver carrito</button>
 </div>
 
-<script src="assets/js/app.js?v=202609290240"></script>
+<script src="assets/js/app.js?v=202609290303"></script>
 </body>
 </html>

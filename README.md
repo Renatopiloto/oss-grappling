@@ -37,13 +37,16 @@ const PACK = { price: 68990, oldPrice: 72890, ... };
 
 La guía de tallas, las preguntas y los textos están directamente en `index.html`.
 
+Si cambias `styles.css` o `app.js`, cambia también el número `?v=` con que se cargan en `index.html` para que los navegadores no muestren la versión antigua guardada.
+
 ## Publicar
 
 El sitio se publica tal cual desde la raíz del repositorio.
 
-**Netlify (recomendado):** *Add new site → Import an existing project → GitHub →* elegir este repositorio. No hay comando de build y el directorio de publicación es la raíz (ya está en `netlify.toml`). Cada cambio que se suba a `main` se publica solo.
+**GitHub Pages (activo):** https://renatopiloto.github.io/oss-grappling/ se actualiza solo con cada cambio en `main`.
 
-**GitHub Pages:** *Settings → Pages → Deploy from a branch →* `main` / `/ (root)`.
+**Netlify:** *Add new site → Import an existing project → GitHub →* elegir este repositorio. No hay comando de build y el directorio de publicación es la raíz (ya está en `netlify.toml`). Cada cambio que se suba a `main` se publica solo.
+
 
 Si cambias de dominio, actualiza las URL de `canonical`, `og:image` y el bloque JSON-LD en el `<head>` de `index.html`.
 

@@ -94,12 +94,19 @@ function sizeButtons(scope, sizes, part) {
 function productCard(p) {
   return `
   <article class="card" data-id="${p.id}">
-    <button type="button" class="card-media" data-open="${p.id}" aria-label="Ver ${p.name} en detalle">
+    <div class="card-media swipe">
       ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
-      <img src="${src(p.front, true)}" srcset="${src(p.front, true)} 600w, ${src(p.front)} 1000w" sizes="(max-width: 560px) 92vw, (max-width: 980px) 46vw, 30vw" width="1000" height="1000" alt="${p.name}, vista frontal" loading="lazy">
-      <img class="alt" src="${src(p.back, true)}" srcset="${src(p.back, true)} 600w, ${src(p.back)} 1000w" sizes="(max-width: 560px) 92vw, (max-width: 980px) 46vw, 30vw" width="1000" height="1000" alt="" loading="lazy">
+      <div class="slides" data-slides>
+        <button type="button" class="slide" data-open="${p.id}" aria-label="Ver ${p.name} en detalle">
+          <img src="${src(p.front, true)}" srcset="${src(p.front, true)} 600w, ${src(p.front)} 1000w" sizes="(max-width: 560px) 92vw, (max-width: 980px) 46vw, 30vw" width="1000" height="1000" alt="${p.name}, vista frontal" loading="lazy">
+        </button>
+        <button type="button" class="slide" data-open="${p.id}" tabindex="-1" aria-hidden="true">
+          <img src="${src(p.back, true)}" srcset="${src(p.back, true)} 600w, ${src(p.back)} 1000w" sizes="(max-width: 560px) 92vw, (max-width: 980px) 46vw, 30vw" width="1000" height="1000" alt="" loading="lazy">
+        </button>
+      </div>
+      <span class="dots" aria-hidden="true"><i class="on"></i><i></i></span>
       <span class="view-hint">Ver detalle</span>
-    </button>
+    </div>
     <div class="card-body">
       <div class="card-top">
         <div>
@@ -147,6 +154,15 @@ function packCard(p) {
 
 $("#grid").innerHTML = PRODUCTS.map(productCard).join("");
 $("#packSlot").innerHTML = packCard(PACK);
+
+// Fotos deslizables (frente / espalda) en pantallas táctiles
+$$("[data-slides]").forEach((track) => {
+  const dots = $$(".dots i", track.parentElement);
+  track.addEventListener("scroll", () => {
+    const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    dots.forEach((d, k) => d.classList.toggle("on", k === i));
+  }, { passive: true });
+});
 
 /* ---------- Selección de talla ------------------------------------------ */
 function setSize(scope, size, part) {
@@ -203,6 +219,13 @@ function addToCart(id, qty = 1, hintId) {
   saveCart();
   renderCart(true);
   toast(`${p.name} · ${sizeText({ size })} agregado`);
+  $$(`.card [data-add="${id}"]`).forEach((b) => {
+    if (!b.dataset.label) b.dataset.label = b.textContent;
+    b.textContent = "✓ Agregado";
+    b.classList.add("done");
+    clearTimeout(b._t);
+    b._t = setTimeout(() => { b.textContent = b.dataset.label; b.classList.remove("done"); }, 1600);
+  });
   if ($("#qv").open) $("#qv").close();
 }
 
@@ -440,7 +463,7 @@ nav.addEventListener("click", (e) => {
 });
 
 /* ---------- Ticker ------------------------------------------------------- */
-const unit = `<span>OSS <i>/</i> Grappling <span class="jp" lang="ja">押忍</span> <i>/</i> Drop 01 Sakura <i>/</i> Jiu-Jitsu Wear <i>/</i> Santiago · Chile <i>/</i></span>`;
+const unit = `<span>OSS <i>/</i> Grappling <span class="jp" lang="ja">押忍</span> <i>/</i> Drop 01 Sakura <i>/</i> Jiu-Jitsu Wear <i>/</i> Valparaíso · Viña del Mar <i>/</i></span>`;
 $("#ticker").innerHTML = unit.repeat(8);
 
 /* ---------- Inicio ------------------------------------------------------- */

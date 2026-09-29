@@ -179,6 +179,7 @@ figure { margin: 0; }
 .eyebrow .jp { letter-spacing: 0.1em; font-size: 13px; }
 .hero-title { font-size: var(--t-h1); }
 .hero-title .l { display: block; }
+.hero-title .hl { color: var(--sakura); }
 .lede { max-width: 34em; margin: 26px 0 0; font-size: var(--t-lg); color: #c9c7cf; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .facts {

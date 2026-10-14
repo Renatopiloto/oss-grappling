@@ -5,6 +5,8 @@
 
 /* ====== CONFIG ============================================================ */
 const WHATSAPP = "56940445826";   // número que recibe los pedidos (sin + ni espacios)
+// Link a la tienda o publicación en Mercado Libre (opción secundaria para quien prefiera comprar ahí)
+const MERCADOLIBRE = "https://listado.mercadolibre.cl/oss-grappling";
 
 const IMG = "assets/img/";
 
@@ -78,6 +80,8 @@ const src = (name, small) => {
   return IMG + name + (name.startsWith("lookbook") || name.startsWith("hero") ? "-800" : "-600") + ".webp";
 };
 const ALL = [...PRODUCTS, PACK];
+// Fotos de ambiente (se muestran completas, sin recortar) vs. fotos de producto sobre fondo gris
+const isPhoto = (name) => /^(lookbook|feature|hero)/.test(name);
 const findP = (id) => ALL.find((p) => p.id === id);
 
 /* ---------- Estado persistente (carrito y datos del formulario) --------- */
@@ -386,9 +390,16 @@ function openQuickView(id) {
 
   $("#qvInner").innerHTML = `
     <div class="qv-gallery">
-      <div class="qv-main"><img id="qvMain" src="${src(images[0])}" width="1000" height="1000" alt="${p.name}"></div>
-      <div class="qv-thumbs" role="group" aria-label="Fotos de ${p.name}">
-        ${images.map((im, i) => `<button type="button" data-img="${im}" aria-current="${i === 0}" aria-label="Foto ${i + 1} de ${images.length}"><img src="${src(im, true)}" alt="" loading="lazy"></button>`).join("")}
+      <div class="qv-main">
+        <div class="qv-track" id="qvTrack" tabindex="0" aria-label="Fotos de ${p.name}">
+          ${images.map((im, i) => `<div class="qv-slide ${isPhoto(im) ? "is-photo" : ""}"><img src="${src(im)}" alt="${p.name}, foto ${i + 1} de ${images.length}" ${i > 1 ? 'loading="lazy"' : ""}></div>`).join("")}
+        </div>
+        <button type="button" class="qv-arrow prev" data-step="-1" aria-label="Foto anterior"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="qv-arrow next" data-step="1" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="qv-count" id="qvCount">1 / ${images.length}</span>
+      </div>
+      <div class="qv-thumbs" role="group" aria-label="Elegir foto">
+        ${images.map((im, i) => `<button type="button" data-idx="${i}" aria-current="${i === 0}" aria-label="Ver foto ${i + 1} de ${images.length}"><img src="${src(im, true)}" alt=""></button>`).join("")}
       </div>
     </div>
     <div class="qv-info">
@@ -429,15 +440,34 @@ function openQuickView(id) {
   if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
 }
 
+/* Galería de la vista rápida: todas las fotos en una franja deslizable */
+function currentSlide() {
+  const tr = $("#qvTrack");
+  return tr ? Math.round(tr.scrollLeft / Math.max(1, tr.clientWidth)) : 0;
+}
+function goSlide(i) {
+  const tr = $("#qvTrack");
+  if (!tr) return;
+  const n = tr.children.length;
+  i = (i + n) % n;
+  tr.scrollTo({ left: i * tr.clientWidth, behavior: "smooth" });
+  markSlide(i);
+}
+function markSlide(i) {
+  $$(".qv-thumbs button").forEach((b, k) => b.setAttribute("aria-current", String(k === i)));
+  const c = $("#qvCount"); if (c) c.textContent = `${i + 1} / ${$("#qvTrack").children.length}`;
+}
+document.addEventListener("scroll", (e) => {
+  if (e.target && e.target.id === "qvTrack") markSlide(currentSlide());
+}, { capture: true, passive: true });
+
 $("#qv").addEventListener("click", (e) => {
   const d = $("#qv");
   if (e.target === d || e.target.closest("[data-qv-close]")) { d.close(); return; }
-  const t = e.target.closest("[data-img]");
-  if (t) {
-    $("#qvMain").src = src(t.dataset.img);
-    $$(".qv-thumbs button").forEach((b) => b.setAttribute("aria-current", String(b === t)));
-    return;
-  }
+  const t = e.target.closest("[data-idx]");
+  if (t) { goSlide(Number(t.dataset.idx)); return; }
+  const ar = e.target.closest("[data-step]");
+  if (ar) { goSlide(currentSlide() + Number(ar.dataset.step)); return; }
   const q = e.target.closest("[data-qvq]");
   if (q) {
     const el = $("#qvQty");
@@ -445,6 +475,11 @@ $("#qv").addEventListener("click", (e) => {
     el.textContent = n;
     $("#qvAdd").dataset.qty = n;
   }
+});
+
+$("#qv").addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") { e.preventDefault(); goSlide(currentSlide() + 1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); goSlide(currentSlide() - 1); }
 });
 
 /* ---------- Lookbook: lightbox ----------------------------------------- */
@@ -531,9 +566,10 @@ nav.addEventListener("click", (e) => {
 });
 
 /* ---------- Ticker ------------------------------------------------------- */
-const unit = `<span>OSS <i>/</i> Grappling <span class="jp" lang="ja">押忍</span> <i>/</i> Drop 01 Sakura <i>/</i> Jiu-Jitsu Wear <i>/</i> Valparaíso · Viña del Mar <i>/</i></span>`;
+const unit = `<span>OSS <i>/</i> Grappling <span class="jp" lang="ja">押忍</span> <i>/</i> Drop 01 Sakura <i>/</i> Jiu-Jitsu Wear <i>/</i> Envíos a todo Chile <i>/</i></span>`;
 $("#ticker").innerHTML = unit.repeat(8);
 
 /* ---------- Inicio ------------------------------------------------------- */
+$$("[data-ml]").forEach((a) => (a.href = MERCADOLIBRE));
 $("#year").textContent = new Date().getFullYear();
 renderCart();

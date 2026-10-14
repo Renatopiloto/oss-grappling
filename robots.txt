@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://renatopiloto.github.io/oss-grappling/sitemap.xml

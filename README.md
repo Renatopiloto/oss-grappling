@@ -43,7 +43,7 @@ Si cambias `styles.css` o `app.js`, cambia también el número `?v=` con que se 
 
 El sitio se publica tal cual desde la raíz del repositorio.
 
-**GitHub Pages (activo):** https://renatopiloto.github.io/oss-grappling/ se actualiza solo con cada cambio en `main`.
+**GitHub Pages (activo):** se publica en https://ossgrappling.cl/ (dominio propio, archivo `CNAME`) y se actualiza solo con cada cambio en `main`. El dominio está en NIC Chile y el DNS en Cloudflare.
 
 **Netlify:** *Add new site → Import an existing project → GitHub →* elegir este repositorio. No hay comando de build y el directorio de publicación es la raíz (ya está en `netlify.toml`). Cada cambio que se suba a `main` se publica solo.
 

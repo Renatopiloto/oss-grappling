@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://renatopiloto.github.io/oss-grappling/</loc>
+    <loc>https://ossgrappling.cl/</loc>
     <lastmod>2026-10-14</lastmod>
-    <image:image><image:loc>https://renatopiloto.github.io/oss-grappling/assets/img/og-image.jpg</image:loc></image:image>
-    <image:image><image:loc>https://renatopiloto.github.io/oss-grappling/assets/img/polera-negra-frente.webp</image:loc></image:image>
-    <image:image><image:loc>https://renatopiloto.github.io/oss-grappling/assets/img/polera-blanca-frente.webp</image:loc></image:image>
-    <image:image><image:loc>https://renatopiloto.github.io/oss-grappling/assets/img/short-frente.webp</image:loc></image:image>
-    <image:image><image:loc>https://renatopiloto.github.io/oss-grappling/assets/img/conjunto.webp</image:loc></image:image>
+    <image:image><image:loc>https://ossgrappling.cl/assets/img/og-image.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ossgrappling.cl/assets/img/polera-negra-frente.webp</image:loc></image:image>
+    <image:image><image:loc>https://ossgrappling.cl/assets/img/polera-blanca-frente.webp</image:loc></image:image>
+    <image:image><image:loc>https://ossgrappling.cl/assets/img/short-frente.webp</image:loc></image:image>
+    <image:image><image:loc>https://ossgrappling.cl/assets/img/conjunto.webp</image:loc></image:image>
   </url>
 </urlset>
